@@ -3,9 +3,11 @@
 
 Surgalign Spine Technology
 
+
 ## Introduction
 
 The purpose of this repository and program is to run a Django based data visualization dashboard. This dashboard consists of multiple data sources from DICOM files. All data are displayed based on [Canvas JS Chart](https://canvasjs.com/) and data are presented in both cross-sectional and longitudinal forms.
+
 
 ## Setup Virtual Environment
 
@@ -66,5 +68,9 @@ class CheckboxData(models.Model):
     sort_by_name = models.CharField(max_length=100)
     approved = models.BooleanField(default=True)
 ```
+# System Design
+
+![alt text](https://github.com/YuMiao329/web_app_data_visualization/blob/main/Data%20Visualization%20Project%20Diagram.png?raw=true)
+
 # Software License:
 This program has an MIT License. All of the code is open to be edited and distributed.
