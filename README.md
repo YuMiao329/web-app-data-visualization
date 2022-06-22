@@ -13,7 +13,7 @@ The purpose of this repository and program is to run a Django based data visuali
 
 * Clone this repository in your local directory.
 * Access this folder and type `. /venv/Scripts/activate` in your git bash window to activate thr virtual environment.
-* Access `datavisual` folder and type `pip install -r requirements.txt` in your git bash window to install necessary dependencies to make the web app tp run.
+* Access `datavisual` folder and type `pip install -r requirements.txt` in your git bash window to install necessary dependencies to make the web app to run.
 
 
 ## Required Packages
