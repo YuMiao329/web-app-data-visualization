@@ -1,3 +1,4 @@
+![npm](https://img.shields.io/badge/Surgalign-Data%20Visualization-blue)
 # Database Visualization Interface
 
 Surgalign Spine Technology
