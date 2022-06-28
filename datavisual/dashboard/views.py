@@ -20,8 +20,8 @@ def home(request):
 # def admin_approval(request):
 #     return render()
 
-def parsed_csv_demo(request):
-    file_name = 'parsed_csv_demo.csv'
+def UCSD_data(request):
+    file_name = 'UCSD_data.csv'
     label_protocol, value_protocol = count_protocol_numbers(file_name)
     label_sex, value_sex = count_sex_numbers(file_name)
 
@@ -174,10 +174,10 @@ def parsed_csv_demo(request):
         'protocol_dictionary':protocol_dictionary,
         
     }
-    return render(request, 'dashboard/parsed_csv_demo.html', context)
+    return render(request, 'dashboard/UCSD_data.html', context)
 
-def parsed_csv_demo_2(request):
-    file_name = 'parsed_csv_demo_2.csv'
+def UCSD_data_fake(request):
+    file_name = 'UCSD_data_fake.csv'
     label_protocol, value_protocol = count_protocol_numbers(file_name)
     label_sex, value_sex = count_sex_numbers(file_name)
 
@@ -330,7 +330,164 @@ def parsed_csv_demo_2(request):
         'protocol_dictionary':protocol_dictionary,
         
     }
-    return render(request, 'dashboard/parsed_csv_demo.html', context)
+    return render(request, 'dashboard/UCSD_data_fake.html', context)
+
+
+def LSpine_data(request):
+    file_name = 'LSpine_data.csv'
+    label_protocol, value_protocol = count_protocol_numbers(file_name)
+    label_sex, value_sex = count_sex_numbers(file_name)
+
+    echo_data = stack_plot_data(file_name, 'EchoTime')
+    repetetion_data = stack_plot_data(file_name, 'RepetitionTime')
+    flipangle_data = stack_plot_data(file_name, 'FlipAngle')
+    slicethickness_data = stack_plot_data(file_name, 'SliceThickness')
+    spacingbetweenslices_data = stack_plot_data(file_name, 'SpacingBetweenSlices')
+    row_data = stack_plot_data(file_name, 'Rows')
+    column_data = stack_plot_data(file_name, 'Columns')
+    pixelspacing0_data = stack_plot_data(file_name, 'PixelSpacing0')
+    total_grouped_protocol = grouped_protocol_parameters(file_name)
+
+
+    echo_names = [i for i in echo_data]
+    repetetion_names = [i for i in repetetion_data]
+    flipangle_names = [i for i in flipangle_data]
+    slicethickness_names = [i for i in slicethickness_data]
+    spacingbetweenslices_names = [i for i in spacingbetweenslices_data]
+    row_names = [i for i in row_data]
+    column_names = [i for i in column_data]
+    pixelspacing0_names = [i for i in pixelspacing0_data]
+
+
+    protocol_plot_points = {}
+    gender_plot_points = {}
+    echo_plot_points = {}
+    repetition_plot_points = {}
+    flipangle_plot_points = {}
+    slicethickness_plot_points = {}
+    spacingbetweenslices_plot_points = {}
+    row_plot_points = {}
+    column_plot_points = {}
+    pixelspacing0_plot_points = {}
+
+    for count, label_name in enumerate(label_protocol):
+        point_dict = {}
+        point_dict[count] = value_protocol[count]
+        protocol_plot_points[label_name] = point_dict
+
+    print('formatted PROTOCOL:', protocol_plot_points)
+
+    for count, label_name in enumerate(label_sex):
+        point_dict = {}
+        point_dict[count] = value_sex[count]
+        gender_plot_points[label_name] = point_dict
+
+
+    for i in pixelspacing0_names:
+        if dict(pixelspacing0_data[i]):
+            pixelspacing0_plot_points[i] = dict(pixelspacing0_data[i])
+
+    for i in row_names:
+        if dict(row_data[i]):
+            row_plot_points[i] = dict(row_data[i])
+
+    for i in column_names:
+        if dict(column_data[i]):
+            column_plot_points[i] = dict(column_data[i])
+
+    for i in spacingbetweenslices_names:
+        if dict(spacingbetweenslices_data[i]):
+            spacingbetweenslices_plot_points[i] = dict(spacingbetweenslices_data[i])
+
+
+    for i in slicethickness_names:
+        if dict(slicethickness_data[i]):
+            slicethickness_plot_points[i] = dict(slicethickness_data[i])
+
+    for i in flipangle_names:
+        if dict(flipangle_data[i]):
+            flipangle_plot_points[i] = dict(flipangle_data[i])
+
+    for i in repetetion_names:
+        if dict(repetetion_data[i]):
+            repetition_plot_points[i] = dict(repetetion_data[i])
+
+    for i in echo_names:
+        if dict(echo_data[i]):
+            echo_plot_points[i] = dict(echo_data[i])
+
+    
+
+    print('TTTTrial', spacingbetweenslices_plot_points)
+
+    print('TE:', echo_plot_points)
+    print('TR:', repetition_plot_points)
+    print('FA:', flipangle_plot_points)
+
+    csv_names = get_csv_files()
+    visible_doc = csv_names
+    count_protocol_numbers_for_all(visible_doc)
+
+    print('aaa',label_protocol)
+    print('bbb',value_protocol)
+    print('ccc',label_sex)
+    print('ddd',value_sex)
+
+    parameter_list = {'TE':echo_plot_points,\
+         'TR':repetition_plot_points, 'FA':flipangle_plot_points,\
+              'ST':slicethickness_plot_points, 'SliceSpacing':spacingbetweenslices_plot_points,\
+                   'Rows':row_plot_points, 'Cols':column_plot_points
+                   , 'PixelSpacing':pixelspacing0_plot_points}
+    zero_item_out = {}
+    for item in parameter_list:
+        
+        value_item = parameter_list[item]
+        for x_1, y_1 in value_item.items():
+            value_unit = value_item[x_1]
+            dic_out = {}
+            for x, y in value_unit.items():
+                if y != 0:
+                    dic_out[x] = y
+            value_item[x_1] = dic_out
+        zero_item_out[item] = value_item
+    print(zero_item_out)            
+    # print('param_list', parameter_list)
+    parameter_list = zero_item_out
+    protocol_dictionary = {}
+    for i in label_protocol:
+        para_dict = {}
+        for j in parameter_list:
+            if i in parameter_list[j]:
+                
+                para_dict[j] = parameter_list[j][i]
+
+        protocol_dictionary[i] = para_dict
+    # print(protocol_dictionary)
+
+
+
+
+
+    context = {
+        'label_protocol':label_protocol,
+        'value_protocol':value_protocol,
+        'label_sex':label_sex,
+        'value_sex':value_sex,
+        'echo_plot_points':echo_plot_points,
+        'repetition_plot_points':repetition_plot_points,
+        'flipangle_plot_points':flipangle_plot_points,
+        'slicethickness_plot_points':slicethickness_plot_points,
+        'spacingbetweenslices_plot_points':spacingbetweenslices_plot_points,
+        'row_plot_points':row_plot_points,
+        'column_plot_points':column_plot_points,
+        'pixelspacing0_plot_points': pixelspacing0_plot_points,
+        'protocol_plot_points':protocol_plot_points,
+        'gender_plot_points': gender_plot_points,
+        'total_grouped_protocol':total_grouped_protocol,
+        'protocol_dictionary':protocol_dictionary,
+        
+    }
+    return render(request, 'dashboard/LSpine_data.html', context)
 
 def product(request):
     return render(request, 'dashboard/product.html')
@@ -347,11 +504,11 @@ def index(request):
     # EACH DATASET
 
 
-    checkbox_value = CheckboxData.objects.all()
+    checkbox_value = CheckboxData.objects.all().order_by('sort_by_name')
     print(checkbox_value)
     label, value = count_protocol_numbers(csv_file)
     
-    id_list = ['Gender_Male','Gender_Female',
+    id_list = ['Gender_Male','Gender_Female','Gender_Other',
         'Modality_CT', 'Modality_MR',
         'Modality_EEG', 'Modality_SPECT','Modality_PET']
 
@@ -367,15 +524,15 @@ def index(request):
     ## TODO: HERE TO CALCULATE REAL RATIO HERE BECAUSE IT COULD BE
     ## CHANGING AFTER TOGGLING THE CHECKBOX
 
-    total_rows, sex_distribution, total_f, total_m, blank_doc = sex_ratio()
+    total_rows, sex_distribution, total_f, total_m, total_o, blank_doc = sex_ratio()
     total_rows_modality, modality_distribution, total_CT, total_MR,\
      total_EEG, total_PET, total_SPECT = modality_ratio()
 
     modality_arr = [total_CT, total_MR, total_EEG, total_PET, total_SPECT]
-    sex_arr = [total_m, total_f]
+    sex_arr = [total_m, total_f, total_o]
 
     modality_names = ['CT', 'MR', 'EEG', 'PET', 'SPECT']
-    sex_names = ['M','F']
+    sex_names = ['M','F','O']
     print('modalitu names', modality_names)
 
     if request.method == 'GET':
@@ -389,7 +546,7 @@ def index(request):
         print('nameclicked:', name_clicked)
         non_match = get_difference(checkbox_names, id_list)
         print('nonmatch',non_match)
-        disp_dict = {'Gender_Male':'M','Gender_Female':'F',
+        disp_dict = {'Gender_Male':'M','Gender_Female':'F','Gender_Other':'O',
         'Modality_CT':'CT', 'Modality_MR':'MR',
         'Modality_EEG':'EEG', 'Modality_SPECT':'SPECT','Modality_PET':'PET'}
 
@@ -400,8 +557,8 @@ def index(request):
         modality_arr = [total_CT, total_MR, total_EEG, total_PET, total_SPECT]
 
         print(modality_arr)
-        total_rows, sex_distribution, total_f, total_m, blank_doc = sex_ratio(not_include=non_match)
-        sex_arr = [total_m, total_f]
+        total_rows, sex_distribution, total_f, total_m, total_o, blank_doc = sex_ratio(not_include=non_match)
+        sex_arr = [total_m, total_f, total_o]
 
         visible_doc = get_difference(csv_names, blank_doc)
         print('docs visible',visible_doc)
@@ -459,6 +616,7 @@ def index(request):
         'sex_distribution': sex_distribution,
         'total_f': total_f,
         'total_m': total_m,
+        'total_o':total_o,
         # 'toggle_list': toggle_list,
         'approve': True,
         

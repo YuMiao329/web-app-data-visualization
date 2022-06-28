@@ -5,7 +5,7 @@ import numpy as np
 import os
 import re
 
-csv_file = 'parsed_csv_demo.csv'
+csv_file = 'UCSD_data.csv'
 current_dir = os.getcwd()
 
 def count_protocol_numbers(csv_file):
@@ -26,11 +26,25 @@ def count_sex_numbers(csv_file):
 
     if (len(label)==1):
         value.append(0)
+        value.append(0)
         if label[0]=='M':
-            label.append('F')  
-        else:
+            label.append('F')
+            label.append('O')  
+        elif label[0] == 'F':
             label.append('M')
+            label.append('O')
+        elif label[0] == 'O':
+            label.append('M')
+            label.append('F')
 
+    if (len(label)==2):
+        value.append(0)
+        if 'M' in label and 'F' in label:
+            label.append('O')  
+        elif 'O' in label and 'F' in label:
+            label.append('M')
+        elif 'O' in label and 'M' in label:
+            label.append('F')
     return label, value
 
 label, value = count_protocol_numbers(csv_file)
@@ -211,7 +225,7 @@ def modality_ratio(not_include=None):
     total_SPECT = 0
     # no_female = 0
     # no_male = 1
-    disp_dict = {'Gender_Male':'M','Gender_Female':'F',
+    disp_dict = {'Gender_Male':'M','Gender_Female':'F','Gender_Other':'O',
         'Modality_CT':'CT', 'Modality_MR':'MR',
         'Modality_EEG':'EEG', 'Modality_SPECT':'SPECT','Modality_PET':'PET'}
     for files in os.listdir(current_dir):
@@ -273,10 +287,11 @@ def sex_ratio(not_include=None):
     sex_numbers = {}
     total_f = 0
     total_m = 0
+    total_o = 0
     # no_female = 0
     # no_male = 1
     blank_doc = []
-    disp_dict = {'Gender_Male':'M','Gender_Female':'F',
+    disp_dict = {'Gender_Male':'M','Gender_Female':'F', 'Gender_Other':'O',
         'Modality_CT':'CT', 'Modality_MR':'MR',
         'Modality_EEG':'EEG', 'Modality_SPECT':'SPECT','Modality_PET':'PET'}
     for files in os.listdir(current_dir):
@@ -298,17 +313,19 @@ def sex_ratio(not_include=None):
 
             sex_numbers['F'] = len(df[df['PatientSex'].str.contains('F')])
             sex_numbers['M'] = len(df[df['PatientSex'].str.contains('M')])
+            sex_numbers['O'] = len(df[df['PatientSex'].str.contains('O')])
 
             sex_distribution[files] = sex_numbers.copy()
 
             total_f += sex_distribution[files].get('F',0)
             total_m += sex_distribution[files].get('M',0)
+            total_o += sex_distribution[files].get('O',0)
         # else:
         #     continue
     
     for j in sex_distribution:
         # print('printhere',j)
-        if sex_distribution[j]['M'] + sex_distribution[j]['F'] == 0:
+        if sex_distribution[j]['M'] + sex_distribution[j]['F'] + sex_distribution[j]['O'] == 0:
             print('blank data here',j)
             blank_doc.append(j)
 
@@ -318,9 +335,9 @@ def sex_ratio(not_include=None):
     print(sex_distribution)
     print(total_f)
     print(total_m)
-    return total_rows, sex_distribution, total_f, total_m, blank_doc
+    return total_rows, sex_distribution, total_f, total_m,total_o, blank_doc
 
-total_rows, sex_distribution, total_f, total_m, blank_doc = sex_ratio()
+total_rows, sex_distribution, total_f, total_m, total_o, blank_doc = sex_ratio()
 
 
 def get_difference(list_a, list_b):
