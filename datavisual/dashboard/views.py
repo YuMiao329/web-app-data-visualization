@@ -305,7 +305,7 @@ def UCSD_data_fake(request):
                 para_dict[j] = parameter_list[j][i]
 
         protocol_dictionary[i] = para_dict
-    # print(protocol_dictionary)
+    print('PPPPPPPPPROROROR###################################################',protocol_dictionary)
 
 
 
@@ -462,7 +462,7 @@ def LSpine_data(request):
                 para_dict[j] = parameter_list[j][i]
 
         protocol_dictionary[i] = para_dict
-    # print(protocol_dictionary)
+    print('PPPPPPPPPROROROR###################################################',protocol_dictionary)
 
 
 
