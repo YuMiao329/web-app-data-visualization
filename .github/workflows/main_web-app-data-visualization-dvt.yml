@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'web-app-data-visualization-DVT'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D4A63A23F3DB4F7FAD11E94477C1395A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A3E821E7A64B40FA8F7D1EE3BEA6F12B }}
