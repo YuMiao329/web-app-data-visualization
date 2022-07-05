@@ -12,6 +12,7 @@ from datavisual.convert_csv import sex_ratio
 from datavisual.convert_csv import modality_ratio
 from datavisual.convert_csv import count_protocol_numbers, count_protocol_numbers_for_all, count_sex_numbers,stack_plot_data, grouped_protocol_parameters
 from .models import CheckboxData
+import json
 # Create your views here.
 
 def home(request):
@@ -22,6 +23,18 @@ def home(request):
 
 def UCSD_data(request):
     file_name = 'UCSD_data.csv'
+
+    json_name = file_name.replace('.csv', '.json')
+    json_name = os.path.join('cache', json_name)
+    curr_dir = os.getcwd()
+    json_dir = os.path.join(curr_dir, json_name)
+
+    if os.path.exists(json_dir):
+        f = open(json_dir)
+        context = json.load(f)
+        print('##############$$$$$$$$$$$$$ file bypass')
+        return render(request, 'dashboard/UCSD_data.html', context)
+
     label_protocol, value_protocol = count_protocol_numbers(file_name)
     label_sex, value_sex = count_sex_numbers(file_name)
 
@@ -174,10 +187,31 @@ def UCSD_data(request):
         'protocol_dictionary':protocol_dictionary,
         
     }
+
+    
+    with open(json_dir,'w') as context_dumped:
+        json.dump(context, context_dumped)
+
     return render(request, 'dashboard/UCSD_data.html', context)
 
 def UCSD_data_fake(request):
     file_name = 'UCSD_data_fake.csv'
+
+
+    json_name = file_name.replace('.csv', '.json')
+    json_name = os.path.join('cache', json_name)
+    curr_dir = os.getcwd()
+    json_dir = os.path.join(curr_dir, json_name)
+
+
+    if os.path.exists(json_dir):
+        f = open(json_dir)
+        context = json.load(f)
+        print('##############$$$$$$$$$$$$$ file bypass')
+        return render(request, 'dashboard/UCSD_data.html', context)
+
+
+
     label_protocol, value_protocol = count_protocol_numbers(file_name)
     label_sex, value_sex = count_sex_numbers(file_name)
 
@@ -330,11 +364,31 @@ def UCSD_data_fake(request):
         'protocol_dictionary':protocol_dictionary,
         
     }
+
+    with open(json_dir,'w') as context_dumped:
+        json.dump(context, context_dumped)
+
     return render(request, 'dashboard/UCSD_data_fake.html', context)
 
 
 def LSpine_data(request):
     file_name = 'LSpine_data.csv'
+
+
+    json_name = file_name.replace('.csv', '.json')
+    json_name = os.path.join('cache', json_name)
+    curr_dir = os.getcwd()
+    json_dir = os.path.join(curr_dir, json_name)
+
+
+    if os.path.exists(json_dir):
+        f = open(json_dir)
+        context = json.load(f)
+        print('##############$$$$$$$$$$$$$ file bypass')
+        return render(request, 'dashboard/UCSD_data.html', context)
+
+
+
     label_protocol, value_protocol = count_protocol_numbers(file_name)
     label_sex, value_sex = count_sex_numbers(file_name)
 
@@ -487,6 +541,11 @@ def LSpine_data(request):
         'protocol_dictionary':protocol_dictionary,
         
     }
+
+    with open(json_dir,'w') as context_dumped:
+        json.dump(context, context_dumped)
+
+    
     return render(request, 'dashboard/LSpine_data.html', context)
 
 def product(request):
@@ -640,6 +699,8 @@ def index(request):
         # 'sum_fe'
 
     }
+
+    
     # return render(request, 'dashboard/index.html', context)
     return render(request, 'dashboard/index.html', context)
 
