@@ -81,7 +81,7 @@ def count_age(csv_file):
 
     
     return number_lists, number_groups
-number_lists, number_groups = count_age(csv_file)
+#number_lists, number_groups = count_age(csv_file)
 
 
 #print('Age List', number_lists)
@@ -277,8 +277,8 @@ def modality_ratio(not_include=None):
     return total_rows_modality, modality_distribution, total_CT, total_MR,\
         total_EEG, total_PET, total_SPECT
 
-total_rows_modality, modality_distribution, total_CT, total_MR,\
-     total_EEG, total_PET, total_SPECT = modality_ratio()
+#total_rows_modality, modality_distribution, total_CT, total_MR,\
+#     total_EEG, total_PET, total_SPECT = modality_ratio()
 
 def sex_ratio(not_include=None):
     ext = ('.csv')
@@ -337,7 +337,7 @@ def sex_ratio(not_include=None):
     print(total_m)
     return total_rows, sex_distribution, total_f, total_m,total_o, blank_doc
 
-total_rows, sex_distribution, total_f, total_m, total_o, blank_doc = sex_ratio()
+#total_rows, sex_distribution, total_f, total_m, total_o, blank_doc = sex_ratio()
 
 
 def get_difference(list_a, list_b):
