@@ -5,7 +5,7 @@ import numpy as np
 import os
 import re
 
-csv_file = 'UCSD_data.csv'
+#csv_file = 'UCSD_data.csv'
 current_dir = os.getcwd()
 
 def count_protocol_numbers(csv_file):
@@ -47,9 +47,9 @@ def count_sex_numbers(csv_file):
             label.append('F')
     return label, value
 
-label, value = count_protocol_numbers(csv_file)
-print(label)
-print(value)
+#label, value = count_protocol_numbers(csv_file)
+#print(label)
+#print(value)
 
 def count_protocol_numbers_for_all(visible_docs):
     doc_specs = {}
@@ -84,8 +84,8 @@ def count_age(csv_file):
 number_lists, number_groups = count_age(csv_file)
 
 
-print('Age List', number_lists)
-print('Number Groups', number_groups)
+#print('Age List', number_lists)
+#print('Number Groups', number_groups)
 
 
 def stack_plot_data(csv_file, column_name):
@@ -123,10 +123,10 @@ def stack_plot_data(csv_file, column_name):
             data_proto[protocol] = data_assort
 
     return data_proto
-echo_result = stack_plot_data(csv_file, 'EchoTime')
-repete_result = stack_plot_data(csv_file, 'RepetitionTime')
-print(echo_result)
-print(repete_result)
+#echo_result = stack_plot_data(csv_file, 'EchoTime')
+#repete_result = stack_plot_data(csv_file, 'RepetitionTime')
+#print(echo_result)
+#print(repete_result)
 
 
 def grouped_protocol_parameters(csv_file):
@@ -162,7 +162,7 @@ def grouped_protocol_parameters(csv_file):
         # print('GROUPED SET:', grouped_set)
 
 
-print('AAAAANSS:',grouped_protocol_parameters(csv_file))
+#print('AAAAANSS:',grouped_protocol_parameters(csv_file))
 
 
 # def repetetion_time(csv_file):
