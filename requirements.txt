@@ -1,6 +1,6 @@
 pydicom
 tqdm
-Django
+django
 django-crispy-forms
 dicom-csv
 whitenoise
