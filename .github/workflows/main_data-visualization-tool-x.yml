@@ -35,8 +35,7 @@ jobs:
         
       - name: Make migrations and run migrations
         run: |
-          python datavisual/manage.py makemigrations --empty polls
-          python datavisual/manage.py migrate polls
+          python datavisual/manage.py runserver
           
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
