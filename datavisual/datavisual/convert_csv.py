@@ -5,8 +5,10 @@ import numpy as np
 import os
 import re
 
-#csv_file = 'UCSD_data.csv'
+
+csv_file_basic = 'UCSD_data.csv'
 current_dir = os.getcwd()
+csv_file = os.path.join(current_dit, csv_file_basic)
 
 def count_protocol_numbers(csv_file):
     df = pd.read_csv(csv_file)
